@@ -1,0 +1,105 @@
+CREATE TABLE `departments`(
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(50),
+	`address` VARCHAR(255),
+	`phone` INT,
+	`email` VARCHAR(150),
+	`website` VARCHAR(255),
+	`head_of_department` VARCHAR(150),
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `students`(
+	`name` VARCHAR(100),
+	`surname` VARCHAR(100),
+	`date_of_birth` DATE,
+	`fiscal_code` VARCHAR(20),
+	`enrolment_date` DATE,
+	`registration_number` INT,
+	`email` VARCHAR(100),
+	`id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `degrees`(
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(100),
+	`level` INT,
+	`address` VARCHAR(255),
+	`email` VARCHAR(150),
+	`website` VARCHAR(255),
+	PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `degrees`
+ADD COLUMN `department_id` INT;
+
+ALTER TABLE `degrees`
+ADD FOREIGN KEY(`department_id`)REFERENCES `departments`(`id`); 
+
+ALTER TABLE `students`
+ADD COLUMN `degree_id` INT;
+
+ALTER TABLE `students`
+ADD FOREIGN KEY(`degree_id`)REFERENCES `degrees`(`id`);
+
+-- Inerimento dati
+INSERT INTO `departments` (`name`, `address`, `phone`, `email`, `website`, `head_of_department`)
+VALUES('Geografia', 'Via Boccia, 45', 23456789, 'sapiente.geografia@departement.it', 'www.sito_di_geofrafia.it', 'Giancarlo Pravattoni');
+
+INSERT INTO `departments` (`name`, `address`, `phone`, `email`, `website`, `head_of_department`)
+VALUES('Biologia', 'Via Boccia, 45', 23456659, 'sapiente.biologia@departement.it', 'www.sito_di_biologia.it', 'Romano Berlusprodi');
+
+INSERT INTO `departments` (`name`, `address`, `phone`, `email`, `website`, `head_of_department`)
+VALUES('Storia', 'Via Boccia, 45', 23356789, 'sapiente.storia@departement.it', 'www.sito_di_storia.it', 'Indiana Giovanni');
+
+INSERT INTO `departments` (`name`, `address`, `phone`, `email`, `website`, `head_of_department`)
+VALUES('Chimica', 'Via Boccia, 45', 23454489, 'sapiente.chimica@departement.it', 'www.sito_di_chimica.it', 'Heisenberg');
+
+INSERT INTO `departments` (`name`, `address`, `phone`, `email`, `website`, `head_of_department`)
+VALUES('Letteratura', 'Via Boccia, 45', 23456226, 'sapiente.letteratura@departement.it', 'www.sito_di_letteratura.it', 'Carlo Alvino');
+
+-- inserimento dati tabella degrees
+
+INSERT INTO `degrees` (`name`, `address`, `level`, `email`, `website`, `department_id`)
+VALUES('Biologia_molecolare', 'Via Boccia, 45', 28, 'sapiente.biologia@departement.it', 'www.sito_di_biologia.it', 2);
+
+INSERT INTO `degrees` (`name`, `address`, `level`, `email`, `website`, `department_id`)
+VALUES('Geografia_politica', 'Via Boccia, 45', 25, 'sapiente.geografia@departement.it', 'www.sito_di_geografia.it', 1);
+
+INSERT INTO `degrees` (`name`, `address`, `level`, `email`, `website`, `department_id`)
+VALUES('Linguistica_italiana', 'Via Boccia, 45', 30, 'sapiente.letteratura@departement.it', 'www.sito_di_letteratura.it', 5);
+
+INSERT INTO `degrees` (`name`, `address`, `level`, `email`, `website`, `department_id`)
+VALUES('Cottura_cristalli', 'Via Boccia, 45', 18, 'sapiente.chimica@departement.it', 'www.sito_di_chimica.it', 4);
+
+INSERT INTO `degrees` (`name`, `address`, `level`, `email`, `website`, `department_id`)
+VALUES('Conservazione_tesori', 'Via Boccia, 45', 20, 'sapiente.storia@departement.it', 'www.sito_di_storia.it', 3);
+
+-- inserimento dati tabella students
+
+INSERT INTO `students` (`name`, `surname`, `date_of_birth`, `fiscal_code`, `enrolment_date`, `registration_number`, `email`, `degree_id`)
+VALUES('Braccobaldo', 'Bau', '1954-11-09', 'IGNMSSR54R09R', '2010-07-12', 1408, 'baubaumiciomicio@libero.it', 2);
+
+INSERT INTO `students` (`name`, `surname`, `date_of_birth`, `fiscal_code`, `enrolment_date`, `registration_number`, `email`, `degree_id`)
+VALUES('Macchia', 'Velli', '1554-07-22', 'MCHVLL54P07M', '1574-07-12', 408, 'nulla@libero.it', 3);
+
+INSERT INTO `students` (`name`, `surname`, `date_of_birth`, `fiscal_code`, `enrolment_date`, `registration_number`, `email`, `degree_id`)
+VALUES('Jessie', 'Pinkman', '2017-05-15', 'JSSPNK54R09R', '2017-07-12', 148, 'letmecook@libero.it', 4);
+
+INSERT INTO `students` (`name`, `surname`, `date_of_birth`, `fiscal_code`, `enrolment_date`, `registration_number`, `email`, `degree_id`)
+VALUES('Arche', 'Ologo', '1994-11-09', 'IGRUSSR53R09R', '2019-07-13', 2207, 'tesoridascoprire@libero.it', 5);
+
+INSERT INTO `students` (`name`, `surname`, `date_of_birth`, `fiscal_code`, `enrolment_date`, `registration_number`, `email`, `degree_id`)
+VALUES('Poison', 'Ivy', '1995-01-15', 'POSN4454R09R', '2010-04-10', 0254, 'piantebelle@libero.it', 1);
+
+-- cancellare una riga
+
+INSERT INTO `departments` (`name`, `address`, `phone`, `email`, `website`, `head_of_department`)
+VALUES('Storia', 'Via Roma, 71', 333.3333333, 'sapienza.storia@departement.it', 'www.sapienza/storia.it', 'Ermenegildo Sussurri');
+
+DELETE FROM `departments` WHERE id = 6;
+
+-- modifica riga
+UPDATE `departments` SET `name`='Fisica', `address`='Via Roma, 01', `phone`=442444, `email`='fisica@departement.it', `website`='www.fisica.it', `head_of_department`='Romano Speppe' WHERE `id`= 4;
+
